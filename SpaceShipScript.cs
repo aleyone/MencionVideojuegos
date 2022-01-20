@@ -9,6 +9,7 @@ public class SpaceShipScript : MonoBehaviour
     Rigidbody2D MyRB;
     public GameObject torpedo;
     GameObject bala;
+    public bool canShot = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,11 +31,31 @@ public class SpaceShipScript : MonoBehaviour
         // Update the position of the cube.
         transform.position = new Vector2(xPos, MyRB.position.y);
 
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") && canShot)
         {
-            bala = Instantiate(torpedo, new Vector2(MyRB.position.x, -5.8f), Quaternion.identity);
-            Rigidbody2D clone = bala.GetComponent<Rigidbody2D>();
-            clone.velocity = new Vector2(0f, 1f) * speedFire;
-        }
+                bala = Instantiate(torpedo, new Vector2(MyRB.position.x, -5.8f), Quaternion.identity);
+                Rigidbody2D clone = bala.GetComponent<Rigidbody2D>();
+                clone.velocity = new Vector2(0f, 1f) * speedFire;
+                canShot = false;
+            }
+        }  
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        canShot = true;
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+       Destroy(bala);
+    }
+
+    public void canShot_()
+    {
+        canShot = true;
+    }
+
+
 }
