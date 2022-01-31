@@ -20,6 +20,14 @@ public class alien : MonoBehaviour
         moveEnemy();
         StartCoroutine(Wait());
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag =="torpedo")
+        {
+            Destroy(gameObject);
+        } 
+    }
     // Update is called once per frame
     void moveEnemy()
     {

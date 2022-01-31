@@ -22,10 +22,14 @@ public class bala : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         scriptnave.canShot_();
+        if (other.gameObject.tag == "alien")
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Destroy(gameObject);
+        
     }
 }
