@@ -6,31 +6,57 @@ public class alien : MonoBehaviour
 {
     GameObject enemy;
     private bool movimiento = true;
+    private float aceleracion = 0.5f;
+    private float speedRepeat = 0.7f;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("moveEnemy", 0.7f, 0.7f);
+        StartCoroutine(Wait());
     }
 
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(speedRepeat);
+        moveEnemy();
+        StartCoroutine(Wait());
+    }
     // Update is called once per frame
     void moveEnemy()
     {
         if (movimiento==true)
         {
-            transform.Translate(Vector3.right);
-            if(transform.position.x > 6.3f)
+            transform.Translate(Vector3.right*aceleracion);
+            if(transform.position.x > 5.6f)
             {
-                Debug.Log("Has llegado el borde");
                 movimiento = false;
+                transform.Translate(Vector3.down);
+
+
+                if (speedRepeat >=0.2)
+                {
+                    transform.Translate(Vector3.down);
+                    aceleracion += 0.2f;
+                    speedRepeat -= 0.1f;
+                }
+                Debug.Log("Aceleracion: " + aceleracion);
+                Debug.Log("Speed Repeat: " + speedRepeat);
             }
            
         } else if (movimiento==false)
         {
-            transform.Translate(Vector3.left);
-            if(transform.position.x < -6.3f)
+            transform.Translate(Vector3.left*aceleracion);
+            if(transform.position.x < -5.6f)
             {
-                Debug.Log("Aquí deberías ir a la izquierda.");
                 movimiento = true;
+
+                if (speedRepeat >=0.2)
+                {
+                    transform.Translate(Vector3.down);
+                    aceleracion += 0.2f;
+                    speedRepeat -= 0.1f;
+                }
+                Debug.Log("Aceleracion: " + aceleracion);
+                Debug.Log("Speed Repeat: " + speedRepeat);
             }
         }
     }
