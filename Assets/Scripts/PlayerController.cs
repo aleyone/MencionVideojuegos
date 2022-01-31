@@ -5,18 +5,30 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D PlayerRB;
-    float fuerza=5;
+    SpriteRenderer PlayerSR;
+    float fuerza=3;
     // Start is called before the first frame update
     void Start()
     {
         PlayerRB = GetComponent<Rigidbody2D>();
+        PlayerSR = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
     {
         float movimiento = Input.GetAxis("Horizontal");
+
+
         PlayerRB.velocity = (transform.right * movimiento * fuerza);
-    
+        if (movimiento >= 0)
+        {            
+            PlayerSR.flipX = false;
+        } else
+        {
+            PlayerSR.flipX = true;            
+        }
+        
+
     }
     // Update is called once per frame
     void Update()
