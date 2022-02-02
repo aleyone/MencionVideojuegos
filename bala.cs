@@ -22,6 +22,8 @@ public class bala : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         scriptnave.canShot_();
+        Destroy(gameObject);
+
         if (other.gameObject.tag == "alien")
         {
             Destroy(gameObject);

@@ -8,6 +8,7 @@ public class alien : MonoBehaviour
     private bool movimiento = true;
     private float aceleracion = 0.5f;
     private float speedRepeat = 0.7f;
+    private bool canMove = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,10 @@ public class alien : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(speedRepeat);
-        moveEnemy();
+        if (canMove == true)
+        {
+            moveEnemy();
+        }
         StartCoroutine(Wait());
     }
 
@@ -26,7 +30,10 @@ public class alien : MonoBehaviour
         if (other.gameObject.tag =="torpedo")
         {
             Destroy(gameObject);
-        } 
+        } else if (other.gameObject.tag == "nave")
+        {
+            canMove = false;
+        }
     }
     // Update is called once per frame
     void moveEnemy()
